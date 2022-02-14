@@ -3,6 +3,7 @@ import numpy as np
 from scipy.stats import multivariate_normal as mvn_dist
 from tqdm.notebook import trange
 
+
 @dataclass
 class DRAMParameters:
     M: int
@@ -15,7 +16,8 @@ class DRAMParameters:
 class SimulationResults:
     def __init__(self):
         self.results = {}
-    
+
+
 class DRAM:
     def __init__(self, params: DRAMParameters):
         self.params = params
@@ -51,12 +53,12 @@ class DRAM:
         # prepare for adaptive metropolis
         # k_sample_history = []
         # k_sample_history.append(q_prev)
-        
+
         sample_history = list()
         s2_history = list()
         sample_history.append(q_prev)
         s2_history.append(variance_prev)
-        
+
         # self.results['chain'] = []
         # self.results['chain'].append(q_prev)
 
@@ -87,7 +89,6 @@ class DRAM:
                 """
                 No delayed rejection
                 """
-                
 
                 """
                 Delayed rejection
@@ -137,7 +138,7 @@ class DRAM:
             g = rng.gamma(shape_parameter, scale_parameter)
             variance_prev = 1.0 / g
             s2_history.append(variance_prev)
-            
+
             # (h)
             if not (curr % self.params.k_0):
                 # adaptive metropolis
@@ -164,6 +165,6 @@ class DRAM:
 
             # (i)
             R = np.linalg.cholesky(cov_prev)
-            
-        self.simulation_results.results['chain'] = np.array(sample_history)
-        self.simulation_results.results['s2chain'] = np.array(s2_history)
+
+        self.simulation_results.results["chain"] = np.array(sample_history)
+        self.simulation_results.results["s2chain"] = np.array(s2_history)

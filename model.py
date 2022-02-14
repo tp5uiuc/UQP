@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class NeoHookeanSolutionGenerator:
     def __init__(self, omega, L, zeta, nu_f):
         self.omega = omega
